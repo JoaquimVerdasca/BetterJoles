@@ -13,15 +13,15 @@ class DiscordBot {
         this.initializeClient();
     }
 
-    public connect(): void {
-        this.client
-            .login(process.env.BOT_TOKEN)
-            .then((_) => Logger.info("Connected to Discord"))
-            .catch((error) =>
-                Logger.error(
-                    `Could not connect to Discord. Error: ${error.message}`
-                )
+    public async connect(): Promise<void> {
+        try {
+            await this.client.login(process.env.BOT_TOKEN);
+            Logger.info("Connected to Discord");
+        } catch (error) {
+            Logger.error(
+                `Could not connect to Discord. Error: ${error.message}`
             );
+        }
     }
 
     private initializeClient(): void {
@@ -33,7 +33,11 @@ class DiscordBot {
     }
 
     private setReadyHandler(): void {
-        this.client.on("ready", () => {
+        this.client.on("ready", async () => {
+            await this.client.user?.setActivity("thots on Twitch 24/7", {
+                type: "WATCHING"
+            });
+
             Logger.info(`Logged in as ${this.client.user?.tag}!`);
         });
     }
