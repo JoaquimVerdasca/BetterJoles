@@ -1,5 +1,5 @@
 import { Command } from "./Command";
-import _ from "underscore";
+import _ from "lodash";
 
 export class CatchphraseCommand extends Command {
     private PHRASES = [
@@ -8,8 +8,6 @@ export class CatchphraseCommand extends Command {
     ];
 
     public async execute(): Promise<void> {
-        await this.message.channel.send("You're the best!");
-
         if (this.message.member?.voice.channel) {
             const voiceConnection = await this.message.member.voice.channel.join();
             const dispatcher = voiceConnection.play(_.sample(this.PHRASES)!, {
@@ -19,6 +17,8 @@ export class CatchphraseCommand extends Command {
             dispatcher.on("finish", () => {
                 voiceConnection.disconnect();
             });
+        } else {
+            await this.message.channel.send("You're the best!");
         }
     }
 
