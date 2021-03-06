@@ -11,6 +11,6 @@ export const Logger = createLogger({
     format: logFormat,
     transports: [
         new transports.Console(),
-        new transports.File({ filename: "betterjoles.log" }),
-    ],
+        new transports.File({ filename: "betterjoles.log" })
+    ]
 });

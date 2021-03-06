@@ -2,6 +2,7 @@ import { Client, Message } from "discord.js";
 import { Command } from "./Command";
 import { CommandType } from "./CommandType";
 import { CatchphraseCommand } from "./Catchphrase.command";
+import { SnoreCommand } from "./Snore.command";
 
 export class CommandManager {
     constructor(private client: Client, private prefix: string) {}
@@ -12,6 +13,8 @@ export class CommandManager {
         switch (keyword) {
             case CommandType.catchphrase:
                 return new CatchphraseCommand(message, args);
+            case CommandType.snore:
+                return new SnoreCommand(message, args);
             default:
                 return null;
         }
